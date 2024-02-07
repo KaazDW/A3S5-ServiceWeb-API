@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,5 +33,36 @@ class ProduitController extends AbstractController
         }
 
         return $this->json($formattedProduits);
+    }
+
+    #[Route('/produits/{id}', name: 'produitDetails', methods: ['GET'])]
+    public function produitDetails($id): JsonResponse
+    {
+        $produit = $this->entityManager->getRepository(Produit::class)->find($id);
+
+        if (!$produit) {
+            return $this->json(['message' => 'Produit non trouve'], 404);
+        }
+
+        // Récupérer les informations sur les magasins dans lesquels le produit est disponible
+        $magasins = [];
+        foreach ($produit->getMagasins() as $magasin) {
+            $magasins[] = [
+                'id' => $magasin->getId(),
+                'nom' => $magasin->getNom(),
+                'adresse' => $magasin->getAdresse(),
+                'zip' => $magasin->getZip(),
+            ];
+        }
+
+        $formattedProduit = [
+            'id' => $produit->getId(),
+            'nom' => $produit->getNom(),
+            'description' => $produit->getDescription(),
+            'prix' => $produit->getPrix(),
+            'magasins' => $magasins,
+        ];
+
+        return $this->json($formattedProduit);
     }
 }
