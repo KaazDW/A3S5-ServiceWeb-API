@@ -40,9 +40,13 @@ class Magasin
     #[ORM\ManyToMany(targetEntity: Produit::class, mappedBy: 'magasinID')]
     private Collection $produits;
 
+    #[ORM\OneToMany(targetEntity: Stock::class, mappedBy: 'magasinID')]
+    private Collection $stocks;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->stocks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +160,36 @@ class Magasin
     {
         if ($this->produits->removeElement($produit)) {
             $produit->removeMagasinID($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stock>
+     */
+    public function getStocks(): Collection
+    {
+        return $this->stocks;
+    }
+
+    public function addStock(Stock $stock): static
+    {
+        if (!$this->stocks->contains($stock)) {
+            $this->stocks->add($stock);
+            $stock->setMagasinID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStock(Stock $stock): static
+    {
+        if ($this->stocks->removeElement($stock)) {
+            // set the owning side to null (unless already changed)
+            if ($stock->getMagasinID() === $this) {
+                $stock->setMagasinID(null);
+            }
         }
 
         return $this;
