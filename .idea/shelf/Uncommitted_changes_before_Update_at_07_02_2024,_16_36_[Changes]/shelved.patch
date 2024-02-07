@@ -1,0 +1,110 @@
+Index: .idea/php.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"MessDetectorOptionsConfiguration\">\n    <option name=\"transferred\" value=\"true\" />\n  </component>\n  <component name=\"PHPCSFixerOptionsConfiguration\">\n    <option name=\"transferred\" value=\"true\" />\n  </component>\n  <component name=\"PHPCodeSnifferOptionsConfiguration\">\n    <option name=\"highlightLevel\" value=\"WARNING\" />\n    <option name=\"transferred\" value=\"true\" />\n  </component>\n  <component name=\"PhpIncludePathManager\">\n    <include_path>\n      <path value=\"$PROJECT_DIR$/vendor/symfony/process\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-kernel\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-foundation\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/framework-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/flex\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/finder\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/filesystem\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/event-dispatcher\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/error-handler\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dotenv\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/deprecation-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dependency-injection\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/console\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/config\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/cache-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/log\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/event-dispatcher\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/container\" />\n      <path value=\"$PROJECT_DIR$/vendor/composer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/stopwatch\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/doctrine-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/inflector\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/persistence\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/instantiator\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/migrations\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/collections\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/doctrine-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/sql-formatter\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/lexer\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/deprecations\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/orm\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/dbal\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/event-manager\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/nikic/php-parser\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/yaml\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/twig/twig\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/debug-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/twig-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/translation-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/var-exporter\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/var-dumper\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/string\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/service-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/runtime\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/routing\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-php83\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-mbstring\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/maker-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme\" />\n    </include_path>\n  </component>\n  <component name=\"PhpProjectSharedConfiguration\" php_language_level=\"8.2\" />\n  <component name=\"PhpStanOptionsConfiguration\">\n    <option name=\"transferred\" value=\"true\" />\n  </component>\n  <component name=\"PsalmOptionsConfiguration\">\n    <option name=\"transferred\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/php.xml b/.idea/php.xml
+--- a/.idea/php.xml	(revision c4568072783fd2253f5d16792ea83250f279e637)
++++ b/.idea/php.xml	(date 1707317880451)
+@@ -73,6 +73,11 @@
+   <component name="PhpStanOptionsConfiguration">
+     <option name="transferred" value="true" />
+   </component>
++  <component name="PhpUnit">
++    <phpunit_settings>
++      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
++    </phpunit_settings>
++  </component>
+   <component name="PsalmOptionsConfiguration">
+     <option name="transferred" value="true" />
+   </component>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"d07fa455-9631-42b8-b264-f2290c99bb93\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Controller/MagasinController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Controller/MagasinController.php\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ComposerSettings\" synchronizationState=\"SYNCHRONIZE\">\n    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>\n    <execution />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"C:\\wamp64\\bin\\php\\php8.1.13\\php.exe\">\n    <include_path>\n      <path value=\"$PROJECT_DIR$/vendor/symfony/process\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-kernel\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-foundation\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/framework-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/flex\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/finder\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/filesystem\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/event-dispatcher\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/error-handler\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dotenv\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/deprecation-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dependency-injection\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/console\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/config\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/cache-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/log\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/event-dispatcher\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/container\" />\n      <path value=\"$PROJECT_DIR$/vendor/composer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/stopwatch\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/doctrine-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/inflector\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/persistence\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/instantiator\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/migrations\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/collections\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/doctrine-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/sql-formatter\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/lexer\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/deprecations\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/orm\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/dbal\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/event-manager\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/nikic/php-parser\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/yaml\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/twig/twig\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/debug-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/twig-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/translation-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/var-exporter\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/var-dumper\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/string\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/service-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/runtime\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/routing\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-php83\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-mbstring\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/maker-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme\" />\n    </include_path>\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;customColor&quot;: &quot;&quot;,\n  &quot;associatedIndex&quot;: 0\n}</component>\n  <component name=\"ProjectId\" id=\"2bzOYWiov39dz1ZOMBEHrpo27SM\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/jeanf/Documents/Github/A3S5-ServiceWeb-API&quot;,\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\n  }\n}</component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"d07fa455-9631-42b8-b264-f2290c99bb93\" name=\"Changes\" comment=\"\" />\n      <created>1707214488876</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1707214488876</updated>\n      <workItem from=\"1707214489928\" duration=\"1764000\" />\n      <workItem from=\"1707312535352\" duration=\"2122000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c4568072783fd2253f5d16792ea83250f279e637)
++++ b/.idea/workspace.xml	(date 1707320001995)
+@@ -5,8 +5,11 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="d07fa455-9631-42b8-b264-f2290c99bb93" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Controller/MagasinController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MagasinController.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/migrations/Version20240207130745.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20240207130745.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Entity/Magasin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Magasin.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Entity/Produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Produit.php" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -19,6 +22,20 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "paulinetrntn"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings">
++    <option name="selectedUrlAndAccountId">
++      <UrlAndAccount>
++        <option name="accountId" value="7f475fbd-5779-4c0f-8ebb-dacfbf86830b" />
++        <option name="url" value="https://github.com/KaazDW/A3S5-ServiceWeb-API.git" />
++      </UrlAndAccount>
++    </option>
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -91,21 +108,21 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jeanf/Documents/Github/A3S5-ServiceWeb-API&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "WebServerToolWindowFactoryState": "false",
++    "git-widget-placeholder": "main",
++    "last_opened_file_path": "/Users/pauline/Documents/Service Web/A3S5-ServiceWeb-API",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "vue.rearranger.settings.migration": "true"
+   }
+-}</component>
++}]]></component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -116,6 +133,7 @@
+       <updated>1707214488876</updated>
+       <workItem from="1707214489928" duration="1764000" />
+       <workItem from="1707312535352" duration="2122000" />
++      <workItem from="1707314974053" duration="3750000" />
+     </task>
+     <servers />
+   </component>

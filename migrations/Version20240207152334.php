@@ -25,8 +25,8 @@ final class Version20240207152334 extends AbstractMigration
         $this->addSql("INSERT INTO Utilisateur ( `nom`,`prenom`,`email`,`password`,`type`) VALUES ( 'JF','Marcourt','test@gmail.com','test','1');");
         $this->addSql("INSERT INTO Produit (`nom`,`description`,`prix`) VALUES ('Chaussure','chaussure','90.0');");
         $this->addSql("INSERT INTO Produit (`nom`,`description`,`prix`) VALUES ('Farine','farine de blé','2.3');");
-        $this->addSql("INSERT INTO Stock (`quantite`,`produit_id_id`,`magasin_id_id`) VALUES ('30','4','1');");
-        $this->addSql("INSERT INTO Stock (`quantite`,`produit_id_id`,`magasin_id_id`) VALUES ('20','5','1');");
+        $this->addSql("INSERT INTO Stock (`quantite`,`produit_id_id`,`magasin_id_id`) VALUES ('30','1','1');");
+        $this->addSql("INSERT INTO Stock (`quantite`,`produit_id_id`,`magasin_id_id`) VALUES ('20','2','1');");
     }
 
     public function down(Schema $schema): void
