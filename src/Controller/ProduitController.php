@@ -18,7 +18,23 @@ class ProduitController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/produit/{id}', name: 'produitDetails', methods: ['GET'])]
+    #[Route('/produit/all', name: 'allProduits', methods: ['GET'])]
+    public function allProduits(): JsonResponse
+    {
+        $produits = $this->entityManager->getRepository(Produit::class)->findAll();
+
+        $formattedProduits = array_map(function ($produit) {
+            return [
+                'id' => $produit->getId(),
+                'name' => $produit->getNom(),
+                'description' => $produit->getDescription(),
+                'prix' => $produit->getPrix()
+            ];
+        }, $produits);
+
+        return $this->json($formattedProduits);
+    }
+    #[Route('/produit/find/{id}', name: 'produitDetails', methods: ['GET'])]
     public function produitDetails($id): JsonResponse
     {
         $produit = $this->entityManager->getRepository(Produit::class)->find($id);
@@ -27,13 +43,18 @@ class ProduitController extends AbstractController
             return $this->json(['message' => 'Produit non trouvé'], 404);
         }
 
+        $stock = $produit->getStocks();
+        $isInStock = $stock ? true : false;
+
         $formattedProduit = [
             'id' => $produit->getId(),
             'name' => $produit->getNom(),
             'description' => $produit->getDescription(),
-            'prix' => $produit->getPrix()
+            'prix' => $produit->getPrix(),
+            'inStock' => $isInStock
         ];
 
         return $this->json($formattedProduit);
     }
+
 }

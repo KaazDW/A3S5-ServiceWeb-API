@@ -22,6 +22,7 @@ class Stock
     #[ORM\ManyToOne(inversedBy: 'stocks')]
     private ?Magasin $magasinID = null;
 
+
     public function getId(): ?int
     {
         return $this->id;

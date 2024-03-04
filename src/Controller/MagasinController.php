@@ -89,4 +89,27 @@ class MagasinController extends AbstractController
         // Distance en kilomètres
         return $earthRadius * $c;
     }
+
+    #[Route('/magasins/stock/{id}', name: 'magasinStock', methods: ['GET'])]
+    public function magasinStock($id): JsonResponse
+    {
+        $magasin = $this->entityManager->getRepository(Magasin::class)->find($id);
+
+        if (!$magasin) {
+            return $this->json(['message' => 'Magasin non trouvé'], 404);
+        }
+
+        $stocks = $magasin->getStocks()->toArray();
+        $formattedStocks = array_map(function ($stock) {
+            $produit = $stock->getProduitID();
+            return [
+                'id' => $produit->getId(),
+                'name' => $produit->getNom(),
+                'description' => $produit->getDescription(),
+                'prix' => $produit->getPrix()
+            ];
+        }, $stocks);
+
+        return $this->json($formattedStocks);
+    }
 }
