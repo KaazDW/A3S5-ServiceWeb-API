@@ -2,7 +2,7 @@
 
 - ✅ En tant qu’utilisateur non connecté, je peux consulter la liste des magasins près de chez moi
     `/magasins/all dans MagasinController`
-    `/magasins/near dans MagasinController`
+    `/magasins/near?latitude=46.2&longitude=5.5 dans MagasinController`
 - ✅ En tant qu’utilisateur non connecté, je peux consulter les produits vendus dans ces magasins
     `/produits/all dans ProduitController`
 - ✅ En tant qu'utilisateur non connecté, je peux consulter si un produit est disponible en stock
