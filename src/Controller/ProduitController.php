@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Produit;
+use App\Entity\Stock;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProduitController extends AbstractController
@@ -17,50 +18,40 @@ class ProduitController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/produits/all', name: 'produitsDisponibles', methods: ['GET'])]
-    public function produitsDisponibles(): JsonResponse
-    {
-        $produits = $this->entityManager->getRepository(Produit::class)->findAll();
-
-        $formattedProduits = [];
-        foreach ($produits as $produit) {
-            $formattedProduits[] = [
-                'id' => $produit->getId(),
-                'nom' => $produit->getNom(),
-                'description' => $produit->getDescription(),
-                'prix' => $produit->getPrix(),
-            ];
-        }
-
-        return $this->json($formattedProduits);
-    }
-
-    #[Route('/produits/{id}', name: 'produitDetails', methods: ['GET'])]
+    #[Route('/produit/{id}', name: 'produitDetails', methods: ['GET'])]
     public function produitDetails($id): JsonResponse
     {
         $produit = $this->entityManager->getRepository(Produit::class)->find($id);
 
         if (!$produit) {
-            return $this->json(['message' => 'Produit non trouve'], 404);
+            return $this->json(['message' => 'Produit non trouvé'], 404);
         }
 
-        // Récupérer les informations sur les magasins dans lesquels le produit est disponible
-        $magasins = [];
-        foreach ($produit->getMagasins() as $magasin) {
-            $magasins[] = [
-                'id' => $magasin->getId(),
-                'nom' => $magasin->getNom(),
-                'adresse' => $magasin->getAdresse(),
-                'zip' => $magasin->getZip(),
-            ];
+        // Récupérer les statistiques du produit
+        $stats = [
+            'nb_ventes' => $produit->getNbVentes(),
+            // Ajoutez d'autres statistiques si nécessaire
+        ];
+
+        // Vérifier la disponibilité en stock du produit
+        $stock = $this->entityManager->getRepository(Stock::class)->findOneBy(['produit' => $produit]);
+
+        $disponibilite = false;
+        $magasin = null;
+        if ($stock && $stock->getQuantite() > 0) {
+            $disponibilite = true;
+            $magasin = $stock->getMagasin()->getNom();
         }
 
+        // Préparation des données à retourner
         $formattedProduit = [
             'id' => $produit->getId(),
             'nom' => $produit->getNom(),
             'description' => $produit->getDescription(),
             'prix' => $produit->getPrix(),
-            'magasins' => $magasins,
+            'stats' => $stats,
+            'disponibilite' => $disponibilite,
+            'magasin' => $magasin,
         ];
 
         return $this->json($formattedProduit);

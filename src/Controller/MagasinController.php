@@ -38,6 +38,7 @@ class MagasinController extends AbstractController
     #[Route('/magasins/near', name: 'magasinsNear', methods: ['GET'])]
     public function magasinsNear(Request $request): JsonResponse
     {
+//        TODO: récupérer les coordonnées du user
         $latitude = $request->query->get('latitude');
         $longitude = $request->query->get('longitude');
 
