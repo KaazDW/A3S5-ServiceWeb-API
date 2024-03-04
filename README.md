@@ -1,10 +1,13 @@
 ### Fonctionnalités List :
 
 - ✅ En tant qu’utilisateur non connecté, je peux consulter la liste des magasins près de chez moi
-    `/magasins/all & /magasins/near dans MagasinController`
+    `/magasins/all dans MagasinController`
+    `/magasins/near dans MagasinController`
 - ✅ En tant qu’utilisateur non connecté, je peux consulter les produits vendus dans ces magasins
     `/produits/all dans ProduitController`
-- En tant qu'utilisateur non connecté, je peux consulter si un produit est disponible en stock
+- ✅ En tant qu'utilisateur non connecté, je peux consulter si un produit est disponible en stock
+    `/produits/find/{id-product} dans ProduitController`
+
 - En tant qu’utilisateur non connecté, je peux écrire un message à un vendeur
 - En tant qu'utilisateur non connecté, je peux m'inscrire afin de devenir un client
 - En tant que client, je peux commander un ou plusieurs produits dans un magasin
@@ -19,6 +22,9 @@
 /magasins/near
 
 /produits/all
+/produits/find/{id-product}
+
+
 ```
 
 ### Entity List :
