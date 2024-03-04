@@ -59,6 +59,7 @@ class MagasinController extends AbstractController
             $formattedMagasins[] = [
                 'id' => $magasin->getId(),
                 'nom' => $magasin->getNom(),
+                'ville' => $magasin->getVille(),
                 'adresse' => $magasin->getAdresse(),
                 'zip' => $magasin->getZip(),
                 'distance' => $distance,
