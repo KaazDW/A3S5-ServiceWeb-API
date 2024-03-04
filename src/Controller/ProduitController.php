@@ -27,31 +27,11 @@ class ProduitController extends AbstractController
             return $this->json(['message' => 'Produit non trouvé'], 404);
         }
 
-        // Récupérer les statistiques du produit
-        $stats = [
-            'nb_ventes' => $produit->getNbVentes(),
-            // Ajoutez d'autres statistiques si nécessaire
-        ];
-
-        // Vérifier la disponibilité en stock du produit
-        $stock = $this->entityManager->getRepository(Stock::class)->findOneBy(['produit' => $produit]);
-
-        $disponibilite = false;
-        $magasin = null;
-        if ($stock && $stock->getQuantite() > 0) {
-            $disponibilite = true;
-            $magasin = $stock->getMagasin()->getNom();
-        }
-
-        // Préparation des données à retourner
         $formattedProduit = [
             'id' => $produit->getId(),
-            'nom' => $produit->getNom(),
+            'name' => $produit->getNom(),
             'description' => $produit->getDescription(),
-            'prix' => $produit->getPrix(),
-            'stats' => $stats,
-            'disponibilite' => $disponibilite,
-            'magasin' => $magasin,
+            'prix' => $produit->getPrix()
         ];
 
         return $this->json($formattedProduit);
