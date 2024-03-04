@@ -7,9 +7,9 @@
     `/produits/all dans ProduitController`
 - ✅ En tant qu'utilisateur non connecté, je peux consulter si un produit est disponible en stock
     `/produits/find/{id-product} dans ProduitController`
-
 - En tant qu’utilisateur non connecté, je peux écrire un message à un vendeur
-- En tant qu'utilisateur non connecté, je peux m'inscrire afin de devenir un client
+- ✅ En tant qu'utilisateur non connecté, je peux m'inscrire afin de devenir un client
+  `/users dans UtilisaeurController`
 - En tant que client, je peux commander un ou plusieurs produits dans un magasin
 - En tant que client, je dispose d'une liste de créneau disponible pour récupérer ma commande
 - En tant que client, je souhaite pouvoir réserver un créneau pour récupérer ma commande.

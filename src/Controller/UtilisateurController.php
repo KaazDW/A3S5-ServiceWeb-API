@@ -24,11 +24,18 @@ class UtilisateurController extends AbstractController
             return new JsonResponse(['message' => 'Les champs email et password sont requis'], 400);
         }
 
+        // Vérifier si l'utilisateur existe déjà dans la base de données
+        $existingUser = $entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $data['email']]);
+
+        if ($existingUser !== null) {
+            return new JsonResponse(['message' => 'Un utilisateur avec cet email existe déjà'], 400);
+        }
+
         // Créer une nouvelle instance de l'entité Utilisateur
         $user = new Utilisateur();
         $user->setEmail($data['email']);
-        $user->setPrenom($data['prenom']);
-        $user->setNom($data['nom']);
+        $user->setPrenom($data['prenom'] ?? null);
+        $user->setNom($data['nom'] ?? null);
         $user->setType(['type1', 'type2']);
 
         // Encoder et définir le mot de passe
