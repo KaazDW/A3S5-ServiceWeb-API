@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d07fa455-9631-42b8-b264-f2290c99bb93" name="Changes" comment="ajout champ horaire_id manquante">
       <change beforePath="$PROJECT_DIR$/.idea/A3S5-ServiceWeb-API.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/A3S5-ServiceWeb-API.iml" afterDir="false" />
+    <list default="true" id="d07fa455-9631-42b8-b264-f2290c99bb93" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_02_2024__16_36__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_02_2024__16_36__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/StockRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/StockRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MagasinController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MagasinController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProduitController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/StockRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/StockRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,9 +86,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
-      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
-      <path value="$PROJECT_DIR$/vendor/symfony/browser-kit" />
-      <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -121,22 +123,9 @@
       <workItem from="1707214489928" duration="1764000" />
       <workItem from="1707312535352" duration="3666000" />
     </task>
-    <task id="LOCAL-00001" summary="ajout champ horaire_id manquante">
-      <option name="closed" value="true" />
-      <created>1707323451935</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1707323451935</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="ajout champ horaire_id manquante" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajout champ horaire_id manquante" />
   </component>
 </project>
