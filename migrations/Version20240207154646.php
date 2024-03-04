@@ -29,6 +29,16 @@ final class Version20240207154646 extends AbstractMigration
         $this->addSql('ALTER TABLE details_commande ADD CONSTRAINT FK_4BCD5F64FD8F9C3 FOREIGN KEY (produit_id_id) REFERENCES produit (id)');
         $this->addSql('ALTER TABLE produit_magasin ADD CONSTRAINT FK_9254D45EF347EFB FOREIGN KEY (produit_id) REFERENCES produit (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE produit_magasin ADD CONSTRAINT FK_9254D45E20096AE3 FOREIGN KEY (magasin_id) REFERENCES magasin (id) ON DELETE CASCADE');
+
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('1','1');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('2','1');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('3','1');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('4','1');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('5','2');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('6','2');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('7','2');");
+        $this->addSql("INSERT INTO produit_magasin (`produit_id`,`magasin_id`) VALUES ('8','2');");
+
     }
 
     public function down(Schema $schema): void

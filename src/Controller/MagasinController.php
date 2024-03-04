@@ -38,17 +38,22 @@ class MagasinController extends AbstractController
     #[Route('/magasins/near', name: 'magasinsNear', methods: ['GET'])]
     public function magasinsNear(Request $request): JsonResponse
     {
-//        TODO: récupérer les coordonnées du user
+        // Récupérer les coordonnées de l'utilisateur à partir des paramètres de requête GET
         $latitude = $request->query->get('latitude');
         $longitude = $request->query->get('longitude');
 
+        // Vérifier si les coordonnées ont été fournies
         if ($latitude === null || $longitude === null) {
-            return new JsonResponse(['error' => 'Les coordonnees du user doivent etre fournies'], JsonResponse::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => 'Les coordonnées du user doivent être fournies'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
+        // Récupérer tous les magasins
         $magasins = $this->entityManager->getRepository(Magasin::class)->findAll();
 
+        // Initialiser le tableau pour stocker les magasins formatés avec les distances
         $formattedMagasins = [];
+
+        // Calculer la distance de chaque magasin et l'ajouter au tableau formaté
         foreach ($magasins as $magasin) {
             $distance = $this->calculateDistance($latitude, $longitude, $magasin->getLatitude(), $magasin->getLongitude());
             $formattedMagasins[] = [
@@ -60,13 +65,17 @@ class MagasinController extends AbstractController
             ];
         }
 
+        // Trier les magasins par distance
         usort($formattedMagasins, function ($a, $b) {
             return $a['distance'] <=> $b['distance'];
         });
 
-        return $this->json($formattedMagasins);
-    }
+        // Sélectionner les 5 premiers magasins les plus proches
+        $nearestMagasins = array_slice($formattedMagasins, 0, 5);
 
+        // Retourner la réponse JSON avec les magasins les plus proches
+        return $this->json($nearestMagasins);
+    }
     private function calculateDistance($lat1, $lon1, $lat2, $lon2)
     {
         // Formule de calcul de la distance entre deux points géographiques (en km)
