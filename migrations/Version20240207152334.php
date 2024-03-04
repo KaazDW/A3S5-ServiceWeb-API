@@ -22,7 +22,7 @@ final class Version20240207152334 extends AbstractMigration
         $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Magasin1','19 rue du chemin','01000','bourg','france','46.2','5.216667');");
         $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Super U','75 boulevard ','93000','Paris','france','48.866667','2.333333');");
         $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Leclerc','13 rondpoint  ','69000','Lyon','france','45.75','4.85');");
-        $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Auchan','01 pont ','26000','Valence','44.933393','4.89236');");
+        $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Auchan','01 pont  ','26000','Valence','france','44.933393','4.89236');");
         $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Lidl','33 route du pont ','45380','Orleans','france','47.902964','1.909251');");
         $this->addSql("INSERT INTO Magasin (`nom`,`adresse`,`zip`,`ville`,`pays`,`latitude`,`longitude`) VALUES ( 'Carrefour','98 boulevard ','13000','Marseille','france','43.3','5.4');");
         $this->addSql("INSERT INTO Utilisateur ( `nom`,`prenom`,`email`,`password`,`type`) VALUES ( 'Pauline','trontin','test@gmail.com','test','1');");
