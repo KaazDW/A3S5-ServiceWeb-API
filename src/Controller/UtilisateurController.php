@@ -73,7 +73,7 @@ class UtilisateurController extends AbstractController
             'exp' => $expirationTime
         );
 
-        $token_jwt = JWT::encode($payload, 'your-secret-key', 'HS256');
+        $token_jwt = JWT::encode($payload, 'testsecretkey', 'HS256');
 
         return new JsonResponse(['token' => $token_jwt]);
     }
