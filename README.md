@@ -23,6 +23,7 @@
 
 
 ### Rooting List :
+> GET
 ```
 /magasins/all
 /magasins/near?latitude=46.2&longitude=5.5
@@ -33,7 +34,25 @@
 
 /users
 ```
+> POST
+```
+/users
+->  {
+    "email": "newuser@example.com",
+    "password": "motdepasse123",
+    "nom":"John",
+    "prenom":"Doe",
+    "type":1
+}
 
+/login
+-> {
+    "email": "newuser@example.com",
+    "password": "motdepasse123"
+}
+
+
+```
 ### Entity List :
 - Magasin
 - Produit
