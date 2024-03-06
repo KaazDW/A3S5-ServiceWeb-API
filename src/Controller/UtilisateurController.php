@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Firebase\JWT\JWT;
 
 class UtilisateurController extends AbstractController
 {
@@ -48,5 +48,33 @@ class UtilisateurController extends AbstractController
 
         // Retourner une réponse JSON avec un message de succès
         return new JsonResponse(['message' => 'Utilisateur créé avec succès'], 201);
+    }
+
+    #[Route('/login', name: 'login', methods: ['POST'])]
+    public function login(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['email']) || !isset($data['password'])) {
+            return new JsonResponse(['message' => 'Les champs email et password sont requis'], 400);
+        }
+
+        $user = $entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $data['email']]);
+
+        if ($user === null || !$passwordHasher->isPasswordValid($user, $data['password'])) {
+            return new JsonResponse(['message' => 'Identifiants incorrects'], 400);
+        }
+
+        $issuedAt = time();
+        $expirationTime = $issuedAt + 60; // token valide pour 60 secondes
+        $payload = array(
+            'userid' => $user->getId(),
+            'iat' => $issuedAt,
+            'exp' => $expirationTime
+        );
+
+        $token_jwt = JWT::encode($payload, 'your-secret-key', 'HS256');
+
+        return new JsonResponse(['token' => $token_jwt]);
     }
 }
