@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Firebase\JWT\JWT;
 
+
 class UtilisateurController extends AbstractController
 {
     #[Route('/users', name: 'create_user', methods: ['POST'])]
