@@ -9,7 +9,8 @@
 - En tant qu’utilisateur non connecté, je peux écrire un message à un vendeur
 - ✅ En tant qu'utilisateur non connecté, je peux m'inscrire afin de devenir un client
   `/users dans UtilisaeurController`
-- En tant que client, je peux commander un ou plusieurs produits dans un magasin
+- ✅En tant que client, je peux commander un ou plusieurs produits dans un magasin
+  `/commandes dans CommandeController`
 - En tant que client, je dispose d'une liste de créneau disponible pour récupérer ma commande
 - En tant que client, je souhaite pouvoir réserver un créneau pour récupérer ma commande.
 - En tant qu’administrateur, je peux déclarer de nouvelles boutiques et mettre à jour le stock en ajoutant ou retirant des articles
