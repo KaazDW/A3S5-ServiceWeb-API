@@ -27,13 +27,32 @@ class CommandeController extends AbstractController
         // Get the token from the request header
         $token = $request->headers->get('Authorization');
 
-        // Check if the token is valid
-        if (!$this->isTokenValid($token)) {
-            throw new AccessDeniedException('Seuls les utilisateurs connectés peuvent passer une commande.');
+        // Vérifie si le token JWT est vide ou s'il ne commence pas par "Bearer "
+        if (!$token || strpos($token, 'Bearer ') !== 0) {
+            return new Response('non autorisé', Response::HTTP_UNAUTHORIZED);
+        }
+        $tokenParts = explode(".", $token);
+        $tokenPayload = base64_decode($tokenParts[1]);
+
+        // Vérifie si le décodage a réussi
+        if (!$tokenPayload) {
+            return new Response('token non valide', Response::HTTP_UNAUTHORIZED);
         }
 
-        // Extract client_id from the token
-//        $clientId = $this->getUser()->getUserIdentifier();
+        $jwtPayload = json_decode($tokenPayload);
+
+        // Vérifie si la charge utile du JWT contient l'identifiant de l'utilisateur
+//        if (!isset($jwtPayload->username)) {
+//            return new Response('Utilisateur non connecté', Response::HTTP_UNAUTHORIZED);
+//        }
+
+        $tokenParts = explode(".", $token);
+
+        $tokenPayload = base64_decode($tokenParts[1]);
+        $jwtPayload = json_decode($tokenPayload);
+//        $mailUser=$jwtPayload->username;
+
+        $userId = $jwtPayload->userid;
 
         // Retrieve the magasin_id and other details from the request body
         $data = json_decode($request->getContent(), true);
@@ -41,18 +60,18 @@ class CommandeController extends AbstractController
         $produits = $data['produits'];
         $status = 1; // Assuming the status is always 1
 
+        // Retrieve the client entity using the user ID
+        $client = $entityManager->getRepository(Utilisateur::class)->find($userId);
+
+        // Retrieve the magasin entity
+        $magasin = $entityManager->getRepository(Magasin::class)->find($magasinId);
+
         // Create a new Commande instance
         $commande = new Commande();
         $commande->setDateCommande(new \DateTime());
         $commande->setStatus($status);
-
-        // Retrieve the client and magasin entities
-//        $client = $entityManager->getRepository(Utilisateur::class)->find($clientId);
-        $magasin = $entityManager->getRepository(Magasin::class)->find($magasinId);
-
-        // Set the client and magasin for the commande
-//        $commande->setClientID($client);
-        $commande->setMagasinID($magasin);
+        $commande->setClientID($client); // Set the client for the commande
+        $commande->setMagasinID($magasin); // Set the magasin for the commande
 
         // Persist the commande entity
         $entityManager->persist($commande);
