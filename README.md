@@ -34,6 +34,8 @@
 /produits/find/{id-product}
 
 /users
+
+/commandes/all
 ```
 > POST
 ```

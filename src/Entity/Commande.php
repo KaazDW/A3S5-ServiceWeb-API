@@ -31,8 +31,8 @@ class Commande
     #[ORM\OneToMany(targetEntity: DetailsCommande::class, mappedBy: 'commandeID')]
     private Collection $detailsCommandes;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
-    private ?CreneauHoraire $horaire = null;
+    #[ORM\ManyToOne(targetEntity: CreneauHoraire::class, inversedBy: 'commandes')]
+    private ?CreneauHoraire $creneauHoraire = null;
 
     public function __construct()
     {
@@ -122,14 +122,14 @@ class Commande
         return $this;
     }
 
-    public function getHoraire(): ?CreneauHoraire
+    public function getCreneauHoraire(): ?CreneauHoraire
     {
-        return $this->horaire;
+        return $this->creneauHoraire;
     }
 
-    public function setHoraire(?CreneauHoraire $horaire): static
+    public function setCreneauHoraire(?CreneauHoraire $creneauHoraire): static
     {
-        $this->horaire = $horaire;
+        $this->creneauHoraire = $creneauHoraire;
 
         return $this;
     }
