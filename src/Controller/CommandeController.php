@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Firebase\JWT\JWT;
+use Symfony\Component\Security\Core\Security;
 
 class CommandeController extends AbstractController
 {
@@ -132,5 +133,56 @@ class CommandeController extends AbstractController
 
         // Return the commandes as a JSON response
         return new Response(json_encode($commandesArray), Response::HTTP_OK, ['Content-Type' => 'application/json']);
+    }
+
+
+    #[Route('/commandes/me', name: 'my_orders', methods: ['GET'])]
+    public function myOrders(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Get the token from the request header
+        $token = $request->headers->get('Authorization');
+
+        // Check if the token is empty or doesn't start with "Bearer "
+        if (!$token || strpos($token, 'Bearer ') !== 0) {
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $tokenParts = explode(".", $token);
+        $tokenPayload = base64_decode($tokenParts[1]);
+
+        // Check if the decoding was successful
+        if (!$tokenPayload) {
+            return new Response('Invalid token', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $jwtPayload = json_decode($tokenPayload);
+
+        // Get the user ID from the JWT payload
+        $userId = $jwtPayload->userid;
+
+        // Retrieve the user entity using the user ID
+        $user = $entityManager->getRepository(Utilisateur::class)->find($userId);
+
+        // If there is no user with this ID, return a 404 Not Found response
+        if (!$user) {
+            return new Response('User not found', Response::HTTP_NOT_FOUND);
+        }
+
+        // Get the user's orders
+        $orders = $entityManager->getRepository(Commande::class)->findBy(['clientID' => $user]);
+
+        // Convert the orders to an array of arrays
+        $ordersArray = array_map(function ($order) {
+            return [
+                'id' => $order->getId(),
+                'dateCommande' => $order->getDateCommande(),
+                'status' => $order->getStatus(),
+                'clientID' => $order->getClientID()->getId(),
+                'magasinID' => $order->getMagasinID()->getId(),
+            ];
+        }, $orders);
+
+        // Return the orders as a JSON response
+        return new Response(json_encode($ordersArray), Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 }
