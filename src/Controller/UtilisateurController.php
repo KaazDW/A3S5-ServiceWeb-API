@@ -107,6 +107,7 @@ class UtilisateurController extends AbstractController
         $expirationTime = $issuedAt + 60; // token valide pour 60 secondes
         $payload = array(
             'userid' => $user->getId(),
+            'roles' => $user->getRoles(),
             'iat' => $issuedAt,
             'exp' => $expirationTime
         );

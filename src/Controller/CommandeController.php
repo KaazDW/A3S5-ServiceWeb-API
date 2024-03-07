@@ -147,7 +147,7 @@ class CommandeController extends AbstractController
         $orders = $entityManager->getRepository(Commande::class)->findBy(['clientID' => $user]);
 
         // Log the orders
-        error_log("Orders: " . print_r($orders, true));
+//        error_log("Orders: " . print_r($orders, true));
 
         // Convert the orders to an array of arrays
         $ordersArray = array_map(function ($order) {
