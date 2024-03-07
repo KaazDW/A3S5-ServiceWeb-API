@@ -32,4 +32,24 @@ class CreneauHoraireController extends AbstractController
         // Return a successful response
         return new Response('Créneau créé avec succès', Response::HTTP_CREATED);
     }
+
+    #[Route('/creneau/all', name: 'all_creneau', methods: ['GET'])]
+    public function allCreneau(EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve all CreneauHoraire entities
+        $creneaux = $entityManager->getRepository(CreneauHoraire::class)->findAll();
+
+        // Convert the creneaux to an array of arrays
+        $creneauxArray = array_map(function ($creneau) {
+            return [
+                'id' => $creneau->getId(),
+                'date' => $creneau->getDate()->format('Y-m-d'),
+                'heureDebut' => $creneau->getHeureDebut()->format('H:i:s'),
+                'heureFin' => $creneau->getHeureFin()->format('H:i:s'),
+            ];
+        }, $creneaux);
+
+        // Return the creneaux as a JSON response
+        return new Response(json_encode($creneauxArray), Response::HTTP_OK, ['Content-Type' => 'application/json']);
+    }
 }
