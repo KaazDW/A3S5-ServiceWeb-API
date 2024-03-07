@@ -30,8 +30,8 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
-    private array $type = [];
+    #[ORM\Column]
+    private array $roles = [];
 
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'clientID')]
     private Collection $commandes;
@@ -43,6 +43,7 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
     {
         $this->commandes = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
     }
 
     public function getId(): ?int
@@ -98,14 +99,18 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getType(): array
+    public function getRoles(): array
     {
-        return $this->type;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setType(array $type): static
+    public function setRoles(array $roles): static
     {
-        $this->type = $type;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -168,20 +173,5 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
         }
 
         return $this;
-    }
-
-    public function getRoles(): array
-    {
-        // TODO: Implement getRoles() method.
-    }
-
-    public function eraseCredentials(): void
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
-
-    public function getUserIdentifier(): string
-    {
-        // TODO: Implement getUserIdentifier() method.
     }
 }
