@@ -19,9 +19,7 @@ use Firebase\JWT\JWT;
 
 class CommandeController extends AbstractController
 {
-
-
-    #[Route('/commandes', name: 'create_commande', methods: ['POST'])]
+    #[Route('/commandes/new', name: 'create_commande', methods: ['POST'])]
     public function createCommande(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Get the token from the request header
@@ -113,5 +111,26 @@ class CommandeController extends AbstractController
         } catch (\Exception $e) {
             return false;
         }
+    }
+    #[Route('/commandes/all', name: 'get_all_commandes', methods: ['GET'])]
+    public function getAllCommandes(EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve all Commande entities
+        $commandes = $entityManager->getRepository(Commande::class)->findAll();
+
+        // Convert the commandes to an array
+        $commandesArray = [];
+        foreach ($commandes as $commande) {
+            $commandesArray[] = [
+                'id' => $commande->getId(),
+                'dateCommande' => $commande->getDateCommande(),
+                'status' => $commande->getStatus(),
+                'clientID' => $commande->getClientID(),
+                'magasinID' => $commande->getMagasinID(),
+            ];
+        }
+
+        // Return the commandes as a JSON response
+        return new Response(json_encode($commandesArray), Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 }
