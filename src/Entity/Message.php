@@ -17,10 +17,10 @@ class Message
     private ?string $contenu = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
-    private ?Utilisateur $expediteur = null;
+    private ?Vendeur $destinataire = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
-    private ?Utilisateur $destinataire = null;
+    #[ORM\Column(length: 255)]
+    private ?string $expediteur = null;
 
     public function getId(): ?int
     {
@@ -39,26 +39,26 @@ class Message
         return $this;
     }
 
-    public function getExpediteur(): ?Utilisateur
-    {
-        return $this->expediteur;
-    }
-
-    public function setExpediteur(?Utilisateur $expediteur): static
-    {
-        $this->expediteur = $expediteur;
-
-        return $this;
-    }
-
-    public function getDestinataire(): ?Utilisateur
+    public function getDestinataire(): ?Vendeur
     {
         return $this->destinataire;
     }
 
-    public function setDestinataire(?Utilisateur $destinataire): static
+    public function setDestinataire(?Vendeur $destinataire): static
     {
         $this->destinataire = $destinataire;
+
+        return $this;
+    }
+
+    public function getExpediteur(): ?string
+    {
+        return $this->expediteur;
+    }
+
+    public function setExpediteur(string $expediteur): static
+    {
+        $this->expediteur = $expediteur;
 
         return $this;
     }

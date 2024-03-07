@@ -1,12 +1,15 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Magasin;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class MagasinController extends AbstractController
 {
@@ -112,4 +115,45 @@ class MagasinController extends AbstractController
 
         return $this->json($formattedStocks);
     }
+
+//    #[Route('/new/magasins', name: 'newMagasins', methods: ['POST'])]
+//    public function createNewStore(Request $request,EntityManagerInterface $entityManager): Response
+//    {
+//        $token = $request->headers->get('Authorization');
+//
+//        if (!$token || !str_starts_with($token, 'Bearer ')) {
+//            return new Response('non autorisé', Response::HTTP_UNAUTHORIZED);
+//        }
+//
+//        $tokenParts = explode(".", $token);
+//        $tokenPayload = base64_decode($tokenParts[1]);
+//
+//        if (!$tokenPayload) {
+//            return new Response('token non valide', Response::HTTP_UNAUTHORIZED);
+//        }
+//
+//        $jwtPayload = json_decode($tokenPayload);
+//
+//        if (!in_array('ROLE_ADMIN', $jwtPayload->roles)) {
+//            return new Response('Vous devez être administrateur pour créer un magasin', Response::HTTP_FORBIDDEN);
+//        }
+//
+//        // Si l'utilisateur a le rôle d'administrateur, vous pouvez créer un nouveau magasin
+//        $data = json_decode($request->getContent(), true);
+//
+//        $magasin = new Magasin();
+//        $magasin->setNom($data['nom']);
+//        $magasin->setAdresse($data['adresse']);
+//        $magasin->setZip($data['zip']);
+//        $magasin->setVille($data['ville']);
+//        $magasin->setPays($data['pays']);
+//        $magasin->setLatitude($data['latitude']);
+//        $magasin->setLongitude($data['longitude']);
+//
+//        // Enregistrement du message dans la base de données
+//        $entityManager->persist($magasin);
+//        $entityManager->flush();
+//
+//        return new Response('Nouveau magasin créé avec succès', Response::HTTP_CREATED);
+//    }
 }

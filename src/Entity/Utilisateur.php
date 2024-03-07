@@ -36,13 +36,9 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'clientID')]
     private Collection $commandes;
 
-    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'expediteur')]
-    private Collection $messages;
-
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->roles = ['ROLE_USER'];
     }
 
