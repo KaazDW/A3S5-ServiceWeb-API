@@ -21,26 +21,48 @@ class CreneauHoraireController extends AbstractController
         $this->security = $security;
 
     }
+
+    /**
+     * @throws \Exception
+     */
     #[Route('/creneau/new', name: 'new_creneau', methods: ['POST'])]
     public function newCreneau(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Decode the request content into an array
         $requestData = json_decode($request->getContent(), true);
 
+        // Check if all required fields are present
+        $requiredFields = ['date', 'heureDebut', 'heureFin'];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($requestData[$field]) || empty($requestData[$field])) {
+                return new JsonResponse(['error' => 'Paramètre manquant : ' . $field], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        // Check if the date, heureDebut, and heureFin are in valid format
+        $date = $requestData['date'];
+        $heureDebut = $requestData['heureDebut'];
+        $heureFin = $requestData['heureFin'];
+
+        if (!strtotime($date) || !strtotime($heureDebut) || !strtotime($heureFin)) {
+            return new JsonResponse(['error' => 'Format de date ou d\'heure invalide'], Response::HTTP_BAD_REQUEST);
+        }
+
         // Create a new CreneauHoraire entity
         $creneau = new CreneauHoraire();
 
         // Set the date and heure for the creneau
-        $creneau->setDate(new \DateTime($requestData['date']));
-        $creneau->setHeureDebut(new \DateTime($requestData['heureDebut']));
-        $creneau->setHeureFin(new \DateTime($requestData['heureFin']));
+        $creneau->setDate(new \DateTime($date));
+        $creneau->setHeureDebut(new \DateTime($heureDebut));
+        $creneau->setHeureFin(new \DateTime($heureFin));
 
         // Persist the creneau entity
         $entityManager->persist($creneau);
         $entityManager->flush();
 
         // Return a successful response
-        return new Response('Créneau créé avec succès', Response::HTTP_CREATED);
+        return new JsonResponse(['message' => 'Créneau créé avec succès'], Response::HTTP_CREATED);
     }
 
     #[Route('/creneau/all', name: 'all_creneau', methods: ['GET'])]

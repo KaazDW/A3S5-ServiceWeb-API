@@ -11,6 +11,7 @@ use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Entity\Magasin;
 use App\Entity\Produit;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,15 +21,15 @@ use Symfony\Component\Security\Core\Security;
 
 class CommandeController extends AbstractController
 {
-    #[Route('/commandes/new/{id}', name: 'create_commande', methods: ['POST'])]
-    public function createCommande($id, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/commandes/new', name: 'create_commande', methods: ['POST'])]
+    public function createCommande(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Get the token from the request header
         $token = $request->headers->get('Authorization');
 
         // Check if the token is empty or doesn't start with "Bearer "
         if (!$token || strpos($token, 'Bearer ') !== 0) {
-            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
         $tokenParts = explode(".", $token);
@@ -36,7 +37,7 @@ class CommandeController extends AbstractController
 
         // Check if the decoding was successful
         if (!$tokenPayload) {
-            return new Response('Invalid token', Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'Invalid token'], Response::HTTP_UNAUTHORIZED);
         }
 
         $jwtPayload = json_decode($tokenPayload);
@@ -47,12 +48,11 @@ class CommandeController extends AbstractController
         // Retrieve the user entity using the user ID
         $user = $entityManager->getRepository(Utilisateur::class)->find($userId);
 
-        // Retrieve the product entity using the product ID
-        $product = $entityManager->getRepository(Produit::class)->find($id);
-
-        // Retrieve the magasin_id from the request body
+        // Retrieve the magasin_id and products from the request body
         $data = json_decode($request->getContent(), true);
         $magasinId = $data['magasin_id'];
+        $products = $data['produits'] ?? [];
+
         $status = 1; // Assuming the status is always 1
 
         // Retrieve the magasin entity
@@ -67,22 +67,51 @@ class CommandeController extends AbstractController
 
         // Persist the commande entity
         $entityManager->persist($commande);
-        $entityManager->flush();
 
-        // Create a new DetailsCommande instance
-        $detailsCommande = new DetailsCommande();
-        $detailsCommande->setProduitID($product);
-        $detailsCommande->setQuantite(1); // Assuming the quantity is always 1
-        $detailsCommande->setCommandeID($commande); // Set the relation to the commande
+        // Check if the products array is not empty
+        if (!empty($products)) {
+            // Create DetailsCommande instances for each product
+            foreach ($products as $productData) {
+                $productId = $productData['produit_id'];
+                $quantity = $productData['quantite'];
 
-        // Persist the detailsCommande entity
-        $entityManager->persist($detailsCommande);
+                // Retrieve the product entity using the product ID
+                $product = $entityManager->getRepository(Produit::class)->find($productId);
+
+                // Check if the product exists
+                if (!$product) {
+                    return new JsonResponse(['error' => 'Le produit avec l\'ID ' . $productId . ' n\'existe pas'], Response::HTTP_NOT_FOUND);
+                }
+
+                // Check if the product is associated with the magasin
+                $isProductInMagasin = false;
+                foreach ($product->getMagasinID() as $magasinAssocie) {
+                    if ($magasinAssocie->getId() === $magasinId) {
+                        $isProductInMagasin = true;
+                        break;
+                    }
+                }
+
+                if (!$isProductInMagasin) {
+                    return new JsonResponse(['error' => 'Le produit avec l\'ID ' . $productId . ' n\'est pas disponible dans le magasin'], Response::HTTP_BAD_REQUEST);
+                }
+
+                // Create a new DetailsCommande instance
+                $detailsCommande = new DetailsCommande();
+                $detailsCommande->setProduitID($product);
+                $detailsCommande->setQuantite($quantity);
+                $detailsCommande->setCommandeID($commande); // Set the relation to the commande
+
+                // Persist the detailsCommande entity
+                $entityManager->persist($detailsCommande);
+            }
+        }
 
         // Flush changes to the database
         $entityManager->flush();
 
-        // Placeholder return statement
-        return new Response('Commande créée avec succès', Response::HTTP_CREATED);
+        // Return success response
+        return new JsonResponse(['message' => 'Commande créée avec succès'], Response::HTTP_CREATED);
     }
 
     #[Route('/commandes/all', name: 'get_all_commandes', methods: ['GET'])]
