@@ -114,7 +114,7 @@ class CreneauHoraireController extends AbstractController
      * @throws \Exception
      */
     //gere la date ulterieur 
-    #[Route('/book/creneaux/{idCommande}', name: 'book_creneau', methods: ['POST'])]
+    #[Route('/creneaux/{idCommande}', name: 'book_creneau', methods: ['POST'])]
     public function reserverCreneau(Request $request, EntityManagerInterface $entityManager, $idCommande,Security $security): Response
     {
         // Get the token from the request header
@@ -148,6 +148,7 @@ class CreneauHoraireController extends AbstractController
         }
 //        dd($userId);
 //        dd($commande->getClientID()->getId());
+
         // Vérifier si la commande appartient à l'utilisateur connecté
         if ($commande->getClientID()->getId() !== $userId) {
             return new Response('Vous n\'êtes pas autorisé à modifier cette commande', Response::HTTP_FORBIDDEN);
@@ -159,6 +160,11 @@ class CreneauHoraireController extends AbstractController
         // Vérifier si les données requises sont présentes dans la requête
         if (!isset($data['creneau_id'])) {
             return new Response('Paramètre manquant pour ajouter le créneau à la commande', Response::HTTP_BAD_REQUEST);
+        }
+
+        // Vérifier si la commande a déjà un créneau associé
+        if ($commande->getCreneauHoraire() !== null) {
+            return new Response('Cette commande a déjà un créneau associé', Response::HTTP_BAD_REQUEST);
         }
 
         // Récupérer le créneau

@@ -103,6 +103,8 @@ class ProduitController extends AbstractController
             return new Response('Produit ou magasin non trouvé', Response::HTTP_NOT_FOUND);
         }
 
+
+
         // Rechercher l'entrée Stock correspondant au produit et au magasin
         $stock = $entityManager->getRepository(Stock::class)->findOneBy([
             'produitID' => $produit,
@@ -114,6 +116,14 @@ class ProduitController extends AbstractController
             $stock = new Stock();
             $stock->setProduitID($produit);
             $stock->setMagasinID($magasin);
+        }
+
+        $quantite = $data['quantite'];
+
+
+        // Vérifier si la quantité est un nombre entier positif
+        if (!is_numeric($quantite) || $quantite < 0 || !ctype_digit($quantite)) {
+            return new Response('La quantité doit être un nombre entier positif', Response::HTTP_BAD_REQUEST);
         }
 
         // Mettre à jour la quantité de stock avec la nouvelle quantité spécifiée

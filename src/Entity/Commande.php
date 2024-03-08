@@ -34,9 +34,13 @@ class Commande
     #[ORM\ManyToOne(targetEntity: CreneauHoraire::class, inversedBy: 'commandes')]
     private ?CreneauHoraire $creneauHoraire = null;
 
+    #[ORM\OneToMany(targetEntity: Notif::class, mappedBy: 'commandeID')]
+    private Collection $notifs;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
+        $this->notifs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +134,36 @@ class Commande
     public function setCreneauHoraire(?CreneauHoraire $creneauHoraire): static
     {
         $this->creneauHoraire = $creneauHoraire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notif>
+     */
+    public function getNotifs(): Collection
+    {
+        return $this->notifs;
+    }
+
+    public function addNotif(Notif $notif): static
+    {
+        if (!$this->notifs->contains($notif)) {
+            $this->notifs->add($notif);
+            $notif->setCommandeID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotif(Notif $notif): static
+    {
+        if ($this->notifs->removeElement($notif)) {
+            // set the owning side to null (unless already changed)
+            if ($notif->getCommandeID() === $this) {
+                $notif->setCommandeID(null);
+            }
+        }
 
         return $this;
     }
