@@ -45,9 +45,9 @@ class MagasinController extends AbstractController
         $latitude = $request->query->get('latitude');
         $longitude = $request->query->get('longitude');
 
-        // Vérifier si les coordonnées ont été fournies
-        if ($latitude === null || $longitude === null) {
-            return new JsonResponse(['error' => 'Les coordonnées du user doivent être fournies'], JsonResponse::HTTP_BAD_REQUEST);
+        // Vérifier si les coordonnées ont été fournies et si ce sont des chiffres
+        if (!is_numeric($latitude) || !is_numeric($longitude)) {
+            return new JsonResponse(['error' => 'Les coordonnées doivent être des chiffres'], Response::HTTP_BAD_REQUEST);
         }
 
         // Vérifier si les coordonnées sont réalistes
@@ -122,39 +122,55 @@ class MagasinController extends AbstractController
     }
 
     #[Route('/new/magasins', name: 'newMagasins', methods: ['POST'])]
-    public function createNewStore(Request $request,EntityManagerInterface $entityManager): Response
+    public function createNewStore(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Récupérer le token d'authentification de l'utilisateur
         $token = $request->headers->get('Authorization');
 
         if (!$token || !str_starts_with($token, 'Bearer ')) {
-            return new Response('non autorisé', Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'Non autorisé'], Response::HTTP_UNAUTHORIZED);
         }
 
+        // Décoder le token JWT
         $tokenParts = explode(".", $token);
         $tokenPayload = base64_decode($tokenParts[1]);
 
         if (!$tokenPayload) {
-            return new Response('token non valide', Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['error' => 'Token non valide'], Response::HTTP_UNAUTHORIZED);
         }
 
         $jwtPayload = json_decode($tokenPayload);
 
+        // Vérifier si l'utilisateur a le rôle d'administrateur
         if (property_exists($jwtPayload, 'roles')) {
             $roleUser = $jwtPayload->roles;
-//            dd($roleUser);
-            if (!in_array('ROLE_ADMIN', $roleUser)) {
-                dd($roleUser);
 
-                return new Response('Vous devez être administrateur pour créer un magasin', Response::HTTP_FORBIDDEN);
+            if (!in_array('ROLE_ADMIN', $roleUser)) {
+                return new JsonResponse(['error' => 'Vous devez être administrateur pour créer un magasin'], Response::HTTP_FORBIDDEN);
             }
         } else {
             // Gérer le cas où la propriété 'roles' n'est pas définie dans le payload JWT
-            return new Response('Informations sur les rôles manquantes dans le token JWT', Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => 'Informations sur les rôles manquantes dans le token JWT'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Si l'utilisateur a le rôle d'administrateur, vous pouvez créer un nouveau magasin
+        // Récupérer les données de la requête
         $data = json_decode($request->getContent(), true);
 
+        // Vérifier si les données requises sont présentes dans la requête
+        $requiredFields = ['nom', 'adresse', 'zip', 'ville', 'pays', 'latitude', 'longitude'];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field]) || empty($data[$field])) {
+                return new JsonResponse(['error' => 'Paramètre manquant : ' . $field], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        // Vérifier si les coordonnées sont des chiffres
+        if (!is_numeric($data['latitude']) || !is_numeric($data['longitude'])) {
+            return new JsonResponse(['error' => 'Les coordonnées de latitude et longitude doivent être des chiffres'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Créer un nouveau magasin
         $magasin = new Magasin();
         $magasin->setNom($data['nom']);
         $magasin->setAdresse($data['adresse']);
@@ -164,10 +180,10 @@ class MagasinController extends AbstractController
         $magasin->setLatitude($data['latitude']);
         $magasin->setLongitude($data['longitude']);
 
-        // Enregistrement du message dans la base de données
+        // Enregistrer le nouveau magasin dans la base de données
         $entityManager->persist($magasin);
         $entityManager->flush();
 
-        return new Response('Nouveau magasin créé avec succès', Response::HTTP_CREATED);
+        return new JsonResponse(['message' => 'Nouveau magasin créé avec succès'], Response::HTTP_CREATED);
     }
 }
