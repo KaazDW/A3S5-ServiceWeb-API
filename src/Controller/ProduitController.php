@@ -60,7 +60,7 @@ class ProduitController extends AbstractController
         return $this->json($formattedProduit);
     }
 
-    #[Route('/update-stock', name: 'update_stock', methods: ['POST'])]
+    #[Route('/update-stock', name: 'update_stock', methods: ['PUT'])]
     public function updateStock(Request $request, EntityManagerInterface $entityManager): Response
     {
         $token = $request->headers->get('Authorization');
@@ -95,7 +95,7 @@ class ProduitController extends AbstractController
             return new Response('Paramètres manquants pour la mise à jour du stock', Response::HTTP_BAD_REQUEST);
         }
 
-// Récupérer l'entité Produit et l'entité Magasin correspondant aux IDs fournis
+        // Récupérer l'entité Produit et l'entité Magasin correspondant aux IDs fournis
         $produit = $entityManager->getRepository(Produit::class)->find($data['produit_id']);
         $magasin = $entityManager->getRepository(Magasin::class)->find($data['magasin_id']);
 
@@ -103,13 +103,13 @@ class ProduitController extends AbstractController
             return new Response('Produit ou magasin non trouvé', Response::HTTP_NOT_FOUND);
         }
 
-// Rechercher l'entrée Stock correspondant au produit et au magasin
+        // Rechercher l'entrée Stock correspondant au produit et au magasin
         $stock = $entityManager->getRepository(Stock::class)->findOneBy([
             'produitID' => $produit,
             'magasinID' => $magasin
         ]);
 
-// Si aucune entrée Stock n'existe, créez-en une nouvelle
+        // Si aucune entrée Stock n'existe, créez-en une nouvelle
         if (!$stock) {
             $stock = new Stock();
             $stock->setProduitID($produit);
@@ -122,11 +122,11 @@ class ProduitController extends AbstractController
         $entityManager->persist($stock);
         $entityManager->flush();
 
-        return new Response('Produit modifier avec succès', Response::HTTP_OK);
+        return new Response('Produit modifié avec succès', Response::HTTP_OK);
 
     }
 
-    #[Route('/remove/product', name: 'remove_product', methods: ['POST'])]
+    #[Route('/remove/product', name: 'remove_product', methods: ['DELETE'])]
     public function removeProduct(Request $request, EntityManagerInterface $entityManager): Response
     {
         $token = $request->headers->get('Authorization');
@@ -148,7 +148,7 @@ class ProduitController extends AbstractController
             $roleUser = $jwtPayload->roles;
 
             if (!in_array('ROLE_ADMIN', $roleUser)) {
-                return new Response('Vous devez être administrateur pour mettre à jour le stock', Response::HTTP_FORBIDDEN);
+                return new Response('Vous devez être administrateur pour retirer un produit du stock', Response::HTTP_FORBIDDEN);
             }
         } else {
             return new Response('Informations sur les rôles manquantes dans le token JWT', Response::HTTP_BAD_REQUEST);
@@ -157,11 +157,11 @@ class ProduitController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         // Vérifier si les données requises sont présentes dans la requête
-        if (!isset($data['produit_id']) || !isset($data['magasin_id']) || !isset($data['quantite'])) {
-            return new Response('Paramètres manquants pour la mise à jour du stock', Response::HTTP_BAD_REQUEST);
+        if (!isset($data['produit_id']) || !isset($data['magasin_id'])) {
+            return new Response('Paramètres manquants pour retirer un produit du stock', Response::HTTP_BAD_REQUEST);
         }
 
-// Récupérer l'entité Produit et l'entité Magasin correspondant aux IDs fournis
+        // Récupérer l'entité Produit et l'entité Magasin correspondant aux IDs fournis
         $produit = $entityManager->getRepository(Produit::class)->find($data['produit_id']);
         $magasin = $entityManager->getRepository(Magasin::class)->find($data['magasin_id']);
 
@@ -169,13 +169,13 @@ class ProduitController extends AbstractController
             return new Response('Produit ou magasin non trouvé', Response::HTTP_NOT_FOUND);
         }
 
-/// Rechercher l'entrée Stock correspondant au produit et au magasin
+        // Rechercher l'entrée Stock correspondant au produit et au magasin
         $stock = $entityManager->getRepository(Stock::class)->findOneBy([
             'produitID' => $produit->getId(),
             'magasinID' => $magasin->getId()
         ]);
 
-// Vérifier si une entrée Stock existe pour le produit et le magasin spécifiés
+        // Vérifier si une entrée Stock existe pour le produit et le magasin spécifiés
         if ($stock) {
             // Supprimer l'entité Stock de la base de données
             $entityManager->remove($stock);
@@ -185,7 +185,7 @@ class ProduitController extends AbstractController
         } else {
             return new Response('Produit non trouvé dans le stock', Response::HTTP_NOT_FOUND);
         }
-
     }
+
 
 }

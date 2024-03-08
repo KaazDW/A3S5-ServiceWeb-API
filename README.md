@@ -13,7 +13,8 @@
 - ✅En tant que client, je peux commander un ou plusieurs produits dans un magasin
   `/commandes dans CommandeController`
 - En tant que client, je dispose d'une liste de créneau disponible pour récupérer ma commande
-- En tant que client, je souhaite pouvoir réserver un créneau pour récupérer ma commande.
+- ✅ En tant que client, je souhaite pouvoir réserver un créneau pour récupérer ma commande.
+  `/book/creneaux/{idCommande} dans CreneauxHoraireController`
 - ✅ En tant qu’administrateur, je peux déclarer de nouvelles boutiques et mettre à jour le stock en ajoutant ou retirant des articles
   `/new/magasins dans MagasinController` et  `/remove/product dans ProduitController` et  `/update-stock dans ProduitController`
 - En tant qu’administrateur, je peux notifier par mail mes clients que leur commande est validée.
