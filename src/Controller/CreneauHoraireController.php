@@ -24,6 +24,30 @@ class CreneauHoraireController extends AbstractController
     #[Route('/creneau/new', name: 'new_creneau', methods: ['POST'])]
     public function newCreneau(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $token = $request->headers->get('Authorization');
+
+        if (!$token || !str_starts_with($token, 'Bearer ')) {
+            return new Response('Utilisateur non autorisé', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $tokenParts = explode(".", $token);
+        $tokenPayload = base64_decode($tokenParts[1]);
+
+        if (!$tokenPayload) {
+            return new Response('token non valide', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $jwtPayload = json_decode($tokenPayload);
+
+        if (property_exists($jwtPayload, 'roles')) {
+            $roleUser = $jwtPayload->roles;
+            if (!in_array('ROLE_ADMIN', $roleUser)) {
+                return new Response('Vous devez être administrateur pour créer un creneau', Response::HTTP_FORBIDDEN);
+            }
+        } else {
+            return new Response('Informations sur les rôles manquantes dans le token JWT', Response::HTTP_BAD_REQUEST);
+        }
+
         // Decode the request content into an array
         $requestData = json_decode($request->getContent(), true);
 

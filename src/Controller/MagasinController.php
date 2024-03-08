@@ -50,6 +50,11 @@ class MagasinController extends AbstractController
             return new JsonResponse(['error' => 'Les coordonnées du user doivent être fournies'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
+        // Vérifier si les coordonnées sont réalistes
+        if ($latitude < -90 || $latitude > 90 || $longitude < -180 || $longitude > 180) {
+            return new JsonResponse(['error' => 'Les coordonnées fournies sont irréalistes'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         // Récupérer tous les magasins
         $magasins = $this->entityManager->getRepository(Magasin::class)->findAll();
 
