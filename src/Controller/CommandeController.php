@@ -96,6 +96,11 @@ class CommandeController extends AbstractController
                     return new JsonResponse(['error' => 'Le produit avec l\'ID ' . $productId . ' n\'est pas disponible dans le magasin'], Response::HTTP_BAD_REQUEST);
                 }
 
+                // Check if quantity is not a positive number
+                if (!is_numeric($quantity) || $quantity <= 0) {
+                    return new JsonResponse('La quantité du produit doit être un nombre positif', Response::HTTP_BAD_REQUEST);
+                }
+
                 // Create a new DetailsCommande instance
                 $detailsCommande = new DetailsCommande();
                 $detailsCommande->setProduitID($product);

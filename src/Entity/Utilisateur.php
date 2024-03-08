@@ -36,10 +36,14 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'clientID')]
     private Collection $commandes;
 
+    #[ORM\OneToMany(targetEntity: Notif::class, mappedBy: 'clientID')]
+    private Collection $notifs;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
         $this->roles = ['ROLE_USER'];
+        $this->notifs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,6 +169,36 @@ class Utilisateur implements PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($message->getExpediteur() === $this) {
                 $message->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notif>
+     */
+    public function getNotifs(): Collection
+    {
+        return $this->notifs;
+    }
+
+    public function addNotif(Notif $notif): static
+    {
+        if (!$this->notifs->contains($notif)) {
+            $this->notifs->add($notif);
+            $notif->setClientID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotif(Notif $notif): static
+    {
+        if ($this->notifs->removeElement($notif)) {
+            // set the owning side to null (unless already changed)
+            if ($notif->getClientID() === $this) {
+                $notif->setClientID(null);
             }
         }
 
